@@ -1,0 +1,29 @@
+body{
+
+}
+
+img{
+  height: 100px;
+}
+
+span.cards{
+  font-size: 160px;
+  vertical-align: middle;
+  margin: 10px;
+}
+
+span.hearts{
+  color: red;
+}
+
+span.diamonds{
+  color: red;
+}
+input{
+  background-color: beige;
+  margin: 10px 10px 10px 0px;
+}
+
+button{
+  width: 120px;
+}

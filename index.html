@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="utf-8">
+    <title>BlackJack</title>
+  </head>
+  <body>
+    <h1 id="header">Black Jack</h1>
+
+    <div>
+      <h2>Player 1</h2>
+      <p id="player1">cards</p>
+    </div>
+
+    <div>
+      <h2>Player 2</h2>
+      <p id="player2">cards</p>
+    </div>
+
+    <div class="buttons">
+      <button type="button" name="hit" onclick="i.hit()">hit</button>
+      <button type="button" name="stay" onclick="i.stay()">stay</button>
+      <button type="button" name="nextHand" onclick="i.nextHand()">Next Hand</button>
+    </div>
+
+    <form id="bet">
+      <input type="text" name="bet"><br>
+      <button type="button" onclick="i.placeBet()">Place Your Bets</button>
+    </form>
+    <p id="current">The current bet is $0</p>
+  </body>
+  <script style="text/javascript" src="js/deck.js"></script>
+  <script style="text/javascript" src="js/suit.js"></script>
+  <script style="text/javascript" src="js/player.js"></script>
+  <script style="text/javascript" src="js/cardUnicode.js"></script>
+  <script style="text/javascript" src="js/blackJackInterface.js"></script>
+</html>
