@@ -1,15 +1,22 @@
-body{
+*{
+  box-sizing: border-box;
+}
 
+body{
+  background-color: #2B434B;
+  color: #ABA9A3;
 }
 
 img{
-  height: 100px;
+  height: 12rem;
+  width: 8.25rem;
+  padding: 1rem;
 }
 
 span.cards{
   font-size: 160px;
   vertical-align: middle;
-  margin: 10px;
+  margin: 0px;
 }
 
 span.hearts{
@@ -25,5 +32,85 @@ input{
 }
 
 button{
-  width: 120px;
+  font-size: 1rem;
+  color: #ABA9A3;
+  width: 10rem;
+  height: 2rem;
+  display: block;
+  margin: auto;
+  border-radius: 28px;
+  background-color: #944957;
+  margin-top: 2rem;
+}
+
+button:hover{
+  background-color: #435E79;
+  color: white;
+}
+
+form{
+  margin: auto;
+}
+
+input{
+  margin-top: 1.5rem;
+  margin-left: 10px;
+  width: 10rem;
+  height: 1.5rem;
+  border-radius: 10px;
+}
+
+
+
+.row::after{
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.block{
+  display: block;
+}
+
+.col-sm-1{
+  width: 100%
+  border: 1px solid black;
+}
+
+@media (min-width: 860px){
+  .col-md-3{
+    width: 25%;
+    float: left;
+  }
+
+  .col-md-6{
+    width: 50%;
+    float: left;
+  }
+
+  .block{
+    display: inline;
+  }
+
+}
+
+
+
+
+
+.centered-text{
+  text-align: center;
+}
+
+#header{
+  padding-top: 50px;
+  padding-bottom: 40px;
+}
+
+.inline{
+  display: inline-block;
+}
+
+.no-margin{
+  margin: 0;
 }

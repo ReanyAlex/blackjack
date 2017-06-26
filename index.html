@@ -6,29 +6,48 @@
     <title>BlackJack</title>
   </head>
   <body>
-    <h1 id="header">Black Jack</h1>
 
-    <div>
-      <h2>Player 1</h2>
-      <p id="player1">cards</p>
+    <div class="row centered-text">
+      <h1 id="header">Black Jack</h1>
     </div>
 
-    <div>
-      <h2>Player 2</h2>
-      <p id="player2">cards</p>
+    <div class="row centered-text">
+      <div class="col-md-3 col-s-1 bottom">
+        <div class="buttons">
+          <button type="button" name="hit" onclick="i.hit()">Hit</button>
+          <button type="button" name="stay" onclick="i.stay()">Stay</button>
+          <button type="button" name="nextHand" onclick="i.nextHand()">Next Hand</button>
+        </div>
+
+        <form id="bet">
+          <input class="inline" type="text" name="bet"><br>
+          <button class="inline no-margin" type="button" onclick="i.placeBet()">Place Your Bets</button>
+        </form>
+        <p id="current">The current bet is $0</p>
+
+
+      </div>
+
+      <div class="col-md-6 col-s-1 top">
+        <div>
+          <h2>Dealer</h2>
+          <p id="player2">cards</p>
+        </div>
+
+        <div>
+          <h2>Player 1</h2>
+          <p id="player1">cards</p>
+        </div>
+
+
+      </div>
     </div>
 
-    <div class="buttons">
-      <button type="button" name="hit" onclick="i.hit()">hit</button>
-      <button type="button" name="stay" onclick="i.stay()">stay</button>
-      <button type="button" name="nextHand" onclick="i.nextHand()">Next Hand</button>
-    </div>
 
-    <form id="bet">
-      <input type="text" name="bet"><br>
-      <button type="button" onclick="i.placeBet()">Place Your Bets</button>
-    </form>
-    <p id="current">The current bet is $0</p>
+
+
+
+
   </body>
   <script style="text/javascript" src="js/deck.js"></script>
   <script style="text/javascript" src="js/suit.js"></script>
