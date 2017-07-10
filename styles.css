@@ -3,8 +3,8 @@
 }
 
 body{
-  background-color: #2B434B;
-  color: #ABA9A3;
+  background-color: #216044;
+  color: #F2E9C4;
 }
 
 img{
@@ -28,18 +28,21 @@ span.diamonds{
 }
 input{
   background-color: beige;
-  margin: 10px 10px 10px 0px;
+  margin: 1.5rem 10px 10px 0px;
+  width: 10rem;
+  height: 1.5rem;
+  border-radius: 10px;
 }
 
 button{
   font-size: 1rem;
-  color: #ABA9A3;
+  color: white;
   width: 10rem;
   height: 2rem;
   display: block;
   margin: auto;
-  border-radius: 28px;
-  background-color: #944957;
+  border-radius: 10px;
+  background-color: #E0342A;
   margin-top: 2rem;
 }
 
@@ -49,18 +52,8 @@ button:hover{
 }
 
 form{
-  margin: auto;
+
 }
-
-input{
-  margin-top: 1.5rem;
-  margin-left: 10px;
-  width: 10rem;
-  height: 1.5rem;
-  border-radius: 10px;
-}
-
-
 
 .row::after{
     content: "";
@@ -83,8 +76,8 @@ input{
     float: left;
   }
 
-  .col-md-6{
-    width: 50%;
+  .col-md-4{
+    width: 33.333%;
     float: left;
   }
 
@@ -92,10 +85,20 @@ input{
     display: inline;
   }
 
+  .left{
+    text-align: left;
+  }
+
+  button{
+    margin: 0px;
+    margin-top: 2rem;
+  }
+
+  .top-padding{
+    padding-top: 140px;
+  }
+
 }
-
-
-
 
 
 .centered-text{
@@ -107,10 +110,19 @@ input{
   padding-bottom: 40px;
 }
 
+.chip{
+  height: 8rem;
+  width: 8rem;
+}
+
 .inline{
   display: inline-block;
 }
 
 .no-margin{
   margin: 0;
+}
+
+.hidden{
+  opacity: 0;
 }

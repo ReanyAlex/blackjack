@@ -83,7 +83,8 @@ Interface.prototype.hit = function() {
 
 Interface.prototype.displayCard = function(player) {
   if (player === "player1") {
-    document.querySelector('#player1').innerHTML = this.makeDom(player)
+    document.querySelector('#player1').innerHTML = this.makeDom(player).cards + '<br>' + this.makeDom(player).cardValue
+    document.querySelector('#player1Values').innerHTML = this.makeDom(player).bankValue
   } else {
     //do display second card faced down
     //this works but it is so ugly
@@ -92,14 +93,15 @@ Interface.prototype.displayCard = function(player) {
       console.log(this.player1.won);
       console.log(this.player2.won);
       console.log(this.show);
-      document.querySelector('#player2').innerHTML = `<img class='cards ${this.player2.cards[0].suit}' src="${this.player2.cards[0].unicode}">` + `<img class='cards ${this.player2.cards[0].suit}' src="${unicode.misc}">` + " " + "<span class='block'>Dealers Bank</span><span class='value block'>" + "  " + this.player2.money + "</span>"
+      document.querySelector('#player2').innerHTML = `<img class='cards ${this.player2.cards[0].suit}' src="${this.player2.cards[0].unicode}">` + `<img class='cards ${this.player2.cards[0].suit}' src="${unicode.misc}">`
+      //  + " " + "<span class='block'>Dealers Bank</span><span class='value block'>" + "  " + this.player2.money + "</span>"
     } else {
       console.log("display cards");
       console.log(this.player1.won);
       console.log(this.player2.won);
       console.log(this.show);
 
-      document.querySelector('#player2').innerHTML = this.makeDom(player)
+      document.querySelector('#player2').innerHTML = this.makeDom(player).cards + '<br>' + this.makeDom(player).cardValue
     }
     //need to fix the above code
   }
@@ -107,12 +109,18 @@ Interface.prototype.displayCard = function(player) {
 
 //makes the DOM elememt that get appended into the DOM
 Interface.prototype.makeDom = function(player) {
-  let domElem = ""
+  let domElem = {
+    cards: "",
+    bankValue: "",
+    cardValue:""
+  };
   for (let i = 0; i < this[player].cards.length; i++) {
 
-    domElem += `<img class='cards ${this[player].cards[i].suit}' src="${this[player].cards[i].unicode}">`
+    domElem.cards += `<img class='cards ${this[player].cards[i].suit}' src="${this[player].cards[i].unicode}">`
   }
-  domElem += "<span class='value block'>" + this[player].cardValue + "</span>" + " " + "<span class='block'>Your Bank</span><span class='value'>" + "  " + this[player].money + "</span>"
+  domElem.bankValue = "<span class='block'>Your Bank</span><span class='value'>" + "  " + this[player].money + "</span>";
+
+  domElem.cardValue = "<span class='value block'>" + this[player].cardValue + "</span>";
   return domElem
 };
 
@@ -189,9 +197,11 @@ Interface.prototype.comparePoints = function() {
 //retrieves the value from the DOM. there is no check yet to make sure it is a numeric value
 Interface.prototype.placeBet = function() {
   let bet = document.getElementById("bet").elements[0].value;
+  console.log(bet);
   this.bet = parseInt(bet);
   document.querySelector('#current').innerHTML = "<p id='current'>The current bet is $" + this.bet + "</p>"
 };
+
 //takes bet and redistrubtes it to who ever wins
 Interface.prototype.whoWon = function() {
   if (this.player1.won) {
@@ -240,5 +250,23 @@ Interface.prototype.ai = function() {
   this.comparePoints()
   this.displayCard("player2")
 };
+
+Interface.prototype.clearBet = function () {
+  document.querySelector('#bet input').value = 0;
+  this.placeBet();
+};
+
+
+document.querySelector('#chip100').onclick = chipValue
+document.querySelector('#chip25').onclick = chipValue
+document.querySelector('#chip10').onclick = chipValue
+document.querySelector('#chip5').onclick = chipValue
+document.querySelector('#chip1').onclick = chipValue
+
+
+
+function chipValue() {
+  document.querySelector('#bet input').value = parseInt(document.querySelector('#bet input').value) + parseInt(this.dataset.value);
+}
 
 i.shuffle()

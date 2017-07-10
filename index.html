@@ -12,23 +12,31 @@
     </div>
 
     <div class="row centered-text">
-      <div class="col-md-3 col-s-1 bottom">
-        <div class="buttons">
-          <button type="button" name="hit" onclick="i.hit()">Hit</button>
-          <button type="button" name="stay" onclick="i.stay()">Stay</button>
-          <button type="button" name="nextHand" onclick="i.nextHand()">Next Hand</button>
-        </div>
 
-        <form id="bet">
-          <input class="inline" type="text" name="bet"><br>
-          <button class="inline no-margin" type="button" onclick="i.placeBet()">Place Your Bets</button>
-        </form>
-        <p id="current">The current bet is $0</p>
+      <div class="col-md-4 col-s-1">
+        <div class="">
 
+
+            <h2>Player 1</h2>
+            <p id="player1Values">cards</p>
+            <img class="chip" id="chip100" data-value="100" src="png/pokerChips100.png" alt="">
+            <img class="chip" id="chip25" data-value="25" src="png/pokerChips25.png" alt="">
+            <img class="chip" id="chip10" data-value="10" src="png/pokerChips10.png" alt="">
+            <img class="chip" id="chip5" data-value="5" src="png/pokerChips5.png" alt="">
+            <img class="chip" id="chip1" data-value="1" src="png/pokerChips1.png" alt="">
+
+            <form id="bet">
+              <input class="inline" type="text" name="bet" value="0"><br>
+              <button class="inline no-margin"  type="button" onclick="i.placeBet()">Place Your Bets</button>
+              <br>
+              <button class="inline no-margin"  type="button" onclick="i.clearBet()">Clear Your Bets</button>
+            </form>
+            <p id="current">The current bet is $0</p>
+          </div>
 
       </div>
 
-      <div class="col-md-6 col-s-1 top">
+      <div class="col-md-4 col-s-1 top">
         <div>
           <h2>Dealer</h2>
           <p id="player2">cards</p>
@@ -38,9 +46,18 @@
           <h2>Player 1</h2>
           <p id="player1">cards</p>
         </div>
-
-
       </div>
+
+      <div class="col-md-4 col-s-1 left top-padding">
+        <div class="buttons ">
+          <button type="button" name="hit" onclick="i.hit()">Hit</button>
+          <button type="button" name="stay" onclick="i.stay()">Stay</button>
+          <button type="button" name="nextHand" onclick="i.nextHand()">Next Hand</button>
+        </div>
+      </div>
+
+
+
     </div>
 
 
