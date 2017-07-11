@@ -126,3 +126,7 @@ form{
 .hidden{
   opacity: 0;
 }
+
+#player1Values{
+  font-size: 2rem;
+}

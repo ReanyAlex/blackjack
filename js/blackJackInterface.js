@@ -89,18 +89,11 @@ Interface.prototype.displayCard = function(player) {
     //do display second card faced down
     //this works but it is so ugly
     if (this.player1.won === false && this.player2.won === false && this.show === false) {
-      console.log("don't display cards");
-      console.log(this.player1.won);
-      console.log(this.player2.won);
-      console.log(this.show);
+      // console.log("don't display cards");
       document.querySelector('#player2').innerHTML = `<img class='cards ${this.player2.cards[0].suit}' src="${this.player2.cards[0].unicode}">` + `<img class='cards ${this.player2.cards[0].suit}' src="${unicode.misc}">`
       //  + " " + "<span class='block'>Dealers Bank</span><span class='value block'>" + "  " + this.player2.money + "</span>"
     } else {
-      console.log("display cards");
-      console.log(this.player1.won);
-      console.log(this.player2.won);
-      console.log(this.show);
-
+      // console.log("display cards");
       document.querySelector('#player2').innerHTML = this.makeDom(player).cards + '<br>' + this.makeDom(player).cardValue
     }
     //need to fix the above code
@@ -118,7 +111,7 @@ Interface.prototype.makeDom = function(player) {
 
     domElem.cards += `<img class='cards ${this[player].cards[i].suit}' src="${this[player].cards[i].unicode}">`
   }
-  domElem.bankValue = "<span class='block'>Your Bank</span><span class='value'>" + "  " + this[player].money + "</span>";
+  domElem.bankValue = "<span class='block'>Your Bank</span><span class='value'>" + " $" + this[player].money + "</span>";
 
   domElem.cardValue = "<span class='value block'>" + this[player].cardValue + "</span>";
   return domElem
@@ -158,10 +151,11 @@ Interface.prototype.changeAce = function(player) {
         this[player].cards[i].valueOne = true;
         this[player].cards[i].changeValue()
         // console.log(this[player].cards[i].valueOne);
-        this.cardValue()
+
       }
     };
   }
+  this.cardValue()
 };
 
 Interface.prototype.over21 = function() {
@@ -172,7 +166,7 @@ Interface.prototype.over21 = function() {
     this.player2.won = true;
   }
   if (this.player2.cardValue > 21) {
-    console.log("player 2 busted");
+    console.log("Dealer busted");
     this.player1.turn = false;
     this.player2.turn = false;
     this.player1.won = true;
@@ -197,7 +191,6 @@ Interface.prototype.comparePoints = function() {
 //retrieves the value from the DOM. there is no check yet to make sure it is a numeric value
 Interface.prototype.placeBet = function() {
   let bet = document.getElementById("bet").elements[0].value;
-  console.log(bet);
   this.bet = parseInt(bet);
   document.querySelector('#current').innerHTML = "<p id='current'>The current bet is $" + this.bet + "</p>"
 };
@@ -207,11 +200,11 @@ Interface.prototype.whoWon = function() {
   if (this.player1.won) {
     this.player1.money += this.bet
     this.player2.money -= this.bet
-    document.querySelector('#header').innerHTML = "<span>Player 1 won</span>  <span>Play another hand</span>"
+    document.querySelector('#header').innerHTML = "<span>Playerwon</span>  <span>Play another hand</span>"
   } else if (this.player2.won) {
     this.player1.money -= this.bet
     this.player2.money += this.bet
-    document.querySelector('#header').innerHTML = "<span>Player 2 won</span>  <span>Play another hand</span>"
+    document.querySelector('#header').innerHTML = "<span>Dealer won</span>  <span>Play another hand</span>"
     this.show = true
   } else {
     this.player1.money = this.player1.money
