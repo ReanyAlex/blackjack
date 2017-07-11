@@ -5,11 +5,14 @@ function Interface() {
   this.deck = new Deck
   this.player1 = new Player(true)
   this.player2 = new Player()
-  this.bet = 0;
+  this.bet = 5;
   this.show = false;
 }
 
 Interface.prototype.shuffle = function() {
+  if (this.player1.money === 0) {
+    document.querySelector('#header').innerHTML = "<div onclick='i.outOfMoney()'><span>You have lost all your money</span><br><span>Click to start a new game</span></div>"
+  }
   //same keys for all the suits
   const deckKeys = Object.keys(this.deck.heart)
   let self = this
@@ -46,12 +49,10 @@ Interface.prototype.cardValue = function() {
     return;
   }
 
-
   let length1 = this.player1.cards.length
   let length2 = this.player2.cards.length
   this.player1.cardValue = 0;
   this.player2.cardValue = 0;
-
 
   for (var i = 0; i < length1; i++) {
     this.player1.cardValue += this.player1.cards[i].value
@@ -105,15 +106,12 @@ Interface.prototype.displayCard = function(player) {
     //do display second card faced down
     //this works but it is so ugly
     if (this.player1.won === false && this.player2.won === false && this.show === false) {
-      // console.log("don't display cards");
       document.querySelector('#player2').innerHTML = `<img class='cards ${this.player2.cards[0].suit}' src="${this.player2.cards[0].unicode}">` + `<img class='cards ${this.player2.cards[0].suit}' src="${unicode.misc}">`
       //  + " " + "<span class='block'>Dealers Bank</span><span class='value block'>" + "  " + this.player2.money + "</span>"
     } else {
       let createdDom = this.makeDom(player)
-      // console.log("display cards");
       document.querySelector('#player2').innerHTML = createdDom.cards + '<br>' + createdDom.cardValue
     }
-    //need to fix the above code
   }
 };
 
@@ -140,13 +138,11 @@ Interface.prototype.stay = function() {
   }
 
   if (this.player1.turn) {
-    // console.log("player 1 turn");
     this.player1.turn = !this.player1.turn
     this.player2.turn = !this.player2.turn
     this.displayCard(player)
     this.ai()
   } else if (this.player2.turn) {
-    // console.log("player 2");
     this.over21()
     this.comparePoints()
     //maybe take this out
@@ -171,9 +167,6 @@ Interface.prototype.changeAce = function(player) {
 
         this[player].cards[i].valueOne = true;
         this[player].cards[i].changeValue()
-
-
-
     }
   }
 
@@ -186,13 +179,11 @@ Interface.prototype.changeAce = function(player) {
 
 Interface.prototype.over21 = function() {
   if (this.player1.cardValue > 21) {
-    console.log("player 1 busted");
     this.player1.turn = false;
     this.player2.turn = false;
     this.player2.won = true;
   }
   if (this.player2.cardValue > 21) {
-    console.log("Dealer busted");
     this.player1.turn = false;
     this.player2.turn = false;
     this.player1.won = true;
@@ -216,6 +207,12 @@ Interface.prototype.comparePoints = function() {
 Interface.prototype.placeBet = function() {
   let bet = document.getElementById("bet").elements[0].value;
   this.bet = parseInt(bet);
+
+  if (this.bet > this.player1.money) {
+    this.bet = this.player1.money;
+    document.querySelector('#bet input').value = this.player1.money;
+
+  }
   document.querySelector('#current').innerHTML = "<p id='current'>The current bet is $" + this.bet + "</p>"
 };
 
@@ -257,22 +254,28 @@ if (this.player1.won === false && this.player2.won === false) {
   for (var j = 0; j <= 3; j++) {
     this.deck[suite[j]].ace.value = 11
   };
+  if (this.bet > this.player1.money) {
+    this.placeBet();
+  }
   document.querySelector('#header').innerHTML = "Black Jack"
   i.shuffle()
 };
 
 Interface.prototype.ai = function() {
-
-  // this.displayCard("player2")
-  if (this.player2.cardValue < 17) {
+  if (this.player2.cardValue > this.player1.cardValue) {
+    this.stay()
+    this.comparePoints()
+    this.displayCard("player2")
+  } else if (this.player2.cardValue < 17) {
     this.displayCard("player2")
     this.hit("player2")
     this.ai()
   } else {
     this.stay()
+    this.comparePoints()
+    this.displayCard("player2")
   }
-  this.comparePoints()
-  this.displayCard("player2")
+
 };
 
 Interface.prototype.clearBet = function () {
@@ -288,13 +291,20 @@ Interface.prototype.blackJack = function () {
   }
 };
 
+Interface.prototype.outOfMoney = function () {
+  this.player1.money = 1005;
+  document.getElementById("bet").elements[0].value = 5;
+  debugger;
+  this.nextHand()
+};
+
+
 
 document.querySelector('#chip100').onclick = chipValue
 document.querySelector('#chip25').onclick = chipValue
 document.querySelector('#chip10').onclick = chipValue
 document.querySelector('#chip5').onclick = chipValue
 document.querySelector('#chip1').onclick = chipValue
-
 
 
 function chipValue() {
