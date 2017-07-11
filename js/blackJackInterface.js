@@ -10,6 +10,7 @@ function Interface() {
 }
 
 Interface.prototype.shuffle = function() {
+  console.log("shuffle");
   //same keys for all the suits
   const deckKeys = Object.keys(this.deck.heart)
   let self = this
@@ -24,6 +25,7 @@ Interface.prototype.shuffle = function() {
 };
 
 Interface.prototype.deal = function() {
+  console.log("deal");
   for (let i = 0; i < 4; i++) {
     let random = this.selectCard()
     if (i % 2 === 0) {
@@ -42,10 +44,17 @@ Interface.prototype.deal = function() {
 };
 
 Interface.prototype.cardValue = function() {
+  console.log("cardValue");
+  if (this.player1.won || this.player2.won) {
+    return;
+  }
+
+
   let length1 = this.player1.cards.length
   let length2 = this.player2.cards.length
   this.player1.cardValue = 0;
   this.player2.cardValue = 0;
+
 
   for (var i = 0; i < length1; i++) {
     this.player1.cardValue += this.player1.cards[i].value
@@ -54,17 +63,29 @@ Interface.prototype.cardValue = function() {
   for (var i = 0; i < length2; i++) {
     this.player2.cardValue += this.player2.cards[i].value
   }
+
+  console.log((length1 + length2));
+  if ((length1 + length2) === 4) {
+    this.blackJack()
+  }
+
   this.isOver21WithAce();
   this.over21();
 };
 
 Interface.prototype.selectCard = function() {
+  console.log("selectCard");
   let length = this.deckArray.length
   let random = Math.floor(Math.random() * length)
   return random
 };
 
 Interface.prototype.hit = function() {
+  if (this.player1.won || this.player2.won) {
+    return;
+  }
+
+  console.log("hit");
   if (this.player1.turn) {
     player = 'player1'
   } else if (this.player2.turn) {
@@ -82,9 +103,11 @@ Interface.prototype.hit = function() {
 };
 
 Interface.prototype.displayCard = function(player) {
+  console.log("displayCard");
   if (player === "player1") {
-    document.querySelector('#player1').innerHTML = this.makeDom(player).cards + '<br>' + this.makeDom(player).cardValue
-    document.querySelector('#player1Values').innerHTML = this.makeDom(player).bankValue
+    let createdDom = this.makeDom(player)
+    document.querySelector('#player1').innerHTML = createdDom.cards + '<br>' + createdDom.cardValue
+    document.querySelector('#player1Values').innerHTML = createdDom.bankValue
   } else {
     //do display second card faced down
     //this works but it is so ugly
@@ -93,8 +116,9 @@ Interface.prototype.displayCard = function(player) {
       document.querySelector('#player2').innerHTML = `<img class='cards ${this.player2.cards[0].suit}' src="${this.player2.cards[0].unicode}">` + `<img class='cards ${this.player2.cards[0].suit}' src="${unicode.misc}">`
       //  + " " + "<span class='block'>Dealers Bank</span><span class='value block'>" + "  " + this.player2.money + "</span>"
     } else {
+      let createdDom = this.makeDom(player)
       // console.log("display cards");
-      document.querySelector('#player2').innerHTML = this.makeDom(player).cards + '<br>' + this.makeDom(player).cardValue
+      document.querySelector('#player2').innerHTML = createdDom.cards + '<br>' + createdDom.cardValue
     }
     //need to fix the above code
   }
@@ -102,6 +126,7 @@ Interface.prototype.displayCard = function(player) {
 
 //makes the DOM elememt that get appended into the DOM
 Interface.prototype.makeDom = function(player) {
+  console.log("makeDom");
   let domElem = {
     cards: "",
     bankValue: "",
@@ -118,6 +143,11 @@ Interface.prototype.makeDom = function(player) {
 };
 
 Interface.prototype.stay = function() {
+  console.log("stay");
+  if (this.player1.won || this.player2.won) {
+    return;
+  }
+
   if (this.player1.turn) {
     // console.log("player 1 turn");
     this.player1.turn = !this.player1.turn
@@ -135,6 +165,7 @@ Interface.prototype.stay = function() {
 };
 
 Interface.prototype.isOver21WithAce = function() {
+  console.log("isOver21WithAce");
   if (this.player1.cardValue > 21) {
     this.changeAce("player1")
   }
@@ -144,21 +175,28 @@ Interface.prototype.isOver21WithAce = function() {
 };
 
 Interface.prototype.changeAce = function(player) {
+  console.log("changeAce");
   //iterate over cards
   for (var i = 0; i < this[player].cards.length; i++) {
-    if (this[player].cards[i].name === "ace") {
-      if (!this[player].cards[i].valueOne) {
+    if (this[player].cards[i].name === "ace" && !this[player].cards[i].valueOne) {
+
         this[player].cards[i].valueOne = true;
         this[player].cards[i].changeValue()
-        // console.log(this[player].cards[i].valueOne);
 
-      }
-    };
+
+
+    }
   }
-  this.cardValue()
+
+  this[player].cardValue = 0;
+  for (var j = 0; j < this[player].cards.length; j++) {
+    this[player].cardValue += this[player].cards[j].value
+  }
+
 };
 
 Interface.prototype.over21 = function() {
+  console.log("over21");
   if (this.player1.cardValue > 21) {
     console.log("player 1 busted");
     this.player1.turn = false;
@@ -174,8 +212,7 @@ Interface.prototype.over21 = function() {
 };
 //if both players stay compare the points
 Interface.prototype.comparePoints = function() {
-  console.log(this.player1.cardValue);
-  console.log(this.player2.cardValue);
+  console.log("comparePoints");
   if (this.player1.cardValue > this.player2.cardValue) {
     this.player1.won = true;
     this.show = true;
@@ -190,6 +227,7 @@ Interface.prototype.comparePoints = function() {
 }
 //retrieves the value from the DOM. there is no check yet to make sure it is a numeric value
 Interface.prototype.placeBet = function() {
+  console.log("placeBet");
   let bet = document.getElementById("bet").elements[0].value;
   this.bet = parseInt(bet);
   document.querySelector('#current').innerHTML = "<p id='current'>The current bet is $" + this.bet + "</p>"
@@ -197,10 +235,11 @@ Interface.prototype.placeBet = function() {
 
 //takes bet and redistrubtes it to who ever wins
 Interface.prototype.whoWon = function() {
+  console.log("whoWon");
   if (this.player1.won) {
     this.player1.money += this.bet
     this.player2.money -= this.bet
-    document.querySelector('#header').innerHTML = "<span>Playerwon</span>  <span>Play another hand</span>"
+    document.querySelector('#header').innerHTML = "<span>Player won</span>  <span>Play another hand</span>"
   } else if (this.player2.won) {
     this.player1.money -= this.bet
     this.player2.money += this.bet
@@ -213,6 +252,13 @@ Interface.prototype.whoWon = function() {
 };
 //reset certain information to start a new hand
 Interface.prototype.nextHand = function() {
+if (this.player1.won === false && this.player2.won === false) {
+  this.player2.won = true;
+  this.placeBet();
+  this.whoWon();
+}
+
+  console.log("nextHand");
   this.deckArray = [];
   this.player1.cardValue = 0;
   this.player1.cards = [];
@@ -232,6 +278,8 @@ Interface.prototype.nextHand = function() {
 };
 
 Interface.prototype.ai = function() {
+  console.log("ai");
+
   // this.displayCard("player2")
   if (this.player2.cardValue < 17) {
     this.displayCard("player2")
@@ -245,8 +293,20 @@ Interface.prototype.ai = function() {
 };
 
 Interface.prototype.clearBet = function () {
-  document.querySelector('#bet input').value = 0;
+  console.log("clearBet");
+  document.querySelector('#bet input').value = 5;
   this.placeBet();
+};
+
+Interface.prototype.blackJack = function () {
+  console.log("we got this far");
+  if(this.player1.cardValue === 21){
+    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    console.log("blackJack");
+    this.player1.won = true;
+    this.show = true;
+    this.whoWon()
+  }
 };
 
 

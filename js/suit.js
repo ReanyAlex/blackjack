@@ -5,6 +5,8 @@ function Suit(suit) {
   const cardValues = [11,2,3,4,5,6,7,8,9,10,10,10,10]
   //function to place on the ace cards
   let aceFunction = function() {
+                console.log("____________xxx_________")
+                console.log(this);
                 if (this.valueOne) {
                   this.value = 1;
                 }
