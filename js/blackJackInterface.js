@@ -10,7 +10,7 @@ function Interface() {
 }
 
 Interface.prototype.shuffle = function() {
-  console.log("");
+
   if (this.player1.money === 0) {
     document.querySelector('#header').innerHTML = "<div onclick='i.outOfMoney()'><span>You have lost all your money</span><br><span>Click to start a new game</span></div>"
   }
@@ -28,7 +28,7 @@ Interface.prototype.shuffle = function() {
 };
 
 Interface.prototype.deal = function() {
-  console.log("");
+
 
   for (let i = 0; i < 4; i++) {
     let random = this.selectCard()
@@ -48,7 +48,7 @@ Interface.prototype.deal = function() {
 };
 
 Interface.prototype.cardValue = function() {
-  console.log("");
+
 
   if (this.player1.won || this.player2.won) {
     return;
@@ -76,7 +76,7 @@ Interface.prototype.cardValue = function() {
 };
 
 Interface.prototype.selectCard = function() {
-  console.log("");
+
 
   let length = this.deckArray.length
   let random = Math.floor(Math.random() * length)
@@ -84,7 +84,7 @@ Interface.prototype.selectCard = function() {
 };
 
 Interface.prototype.hit = function() {
-  console.log("");
+
 
   if (this.player1.won || this.player2.won) {
     return;
@@ -107,7 +107,7 @@ Interface.prototype.hit = function() {
 };
 
 Interface.prototype.displayCard = function(player) {
-  console.log("");
+
 
   if (player === "player1") {
     let createdDom = this.makeDom(player)
@@ -128,7 +128,7 @@ Interface.prototype.displayCard = function(player) {
 
 //makes the DOM elememt that get appended into the DOM
 Interface.prototype.makeDom = function(player) {
-  console.log("");
+
 
   let domElem = {
     cards: "",
@@ -146,7 +146,7 @@ Interface.prototype.makeDom = function(player) {
 };
 
 Interface.prototype.stay = function() {
-  console.log("");
+
 
   if (this.player1.won || this.player2.won) {
     return;
@@ -167,7 +167,7 @@ Interface.prototype.stay = function() {
 };
 
 Interface.prototype.isOver21WithAce = function() {
-  console.log("");
+
 
   if (this.player1.cardValue > 21) {
     this.changeAce("player1")
@@ -178,7 +178,7 @@ Interface.prototype.isOver21WithAce = function() {
 };
 
 Interface.prototype.changeAce = function(player) {
-  console.log("");
+
 
   //iterate over cards
   for (var i = 0; i < this[player].cards.length; i++) {
@@ -197,7 +197,7 @@ Interface.prototype.changeAce = function(player) {
 };
 
 Interface.prototype.over21 = function() {
-  console.log("");
+
 
   if (this.player1.cardValue > 21) {
     this.player1.turn = false;
@@ -212,7 +212,7 @@ Interface.prototype.over21 = function() {
 };
 //if both players stay compare the points
 Interface.prototype.comparePoints = function() {
-  console.log("");
+
 
   if (this.player1.cardValue > this.player2.cardValue) {
     this.player1.won = true;
@@ -228,7 +228,7 @@ Interface.prototype.comparePoints = function() {
 }
 //retrieves the value from the DOM. there is no check yet to make sure it is a numeric value
 Interface.prototype.placeBet = function() {
-  console.log("");
+
 
   let bet = document.getElementById("bet").elements[0].value;
   this.bet = parseInt(bet);
@@ -243,8 +243,6 @@ Interface.prototype.placeBet = function() {
 
 //takes bet and redistrubtes it to who ever wins
 Interface.prototype.whoWon = function() {
-
-  console.log("whoWon");
   if (this.player1.won) {
     this.player1.money += this.bet
     this.player2.money -= this.bet
@@ -261,7 +259,7 @@ Interface.prototype.whoWon = function() {
 };
 //reset certain information to start a new hand
 Interface.prototype.nextHand = function() {
-  console.log("");
+
 
 if (this.player1.won === false && this.player2.won === false) {
   this.player2.won = true;
@@ -291,7 +289,7 @@ if (this.player1.won === false && this.player2.won === false) {
 };
 
 Interface.prototype.ai = function() {
-  console.log("");
+
 
   if (this.player2.cardValue > this.player1.cardValue) {
     this.stay()
@@ -310,14 +308,13 @@ Interface.prototype.ai = function() {
 };
 
 Interface.prototype.clearBet = function () {
-  console.log("");
+
 
   document.querySelector('#bet input').value = 5;
   this.placeBet();
 };
 
 Interface.prototype.blackJack = function () {
-    console.log("blackJack");
   if(this.player1.cardValue === 21){
     this.player1.won = true;
     this.show = true;
@@ -325,7 +322,7 @@ Interface.prototype.blackJack = function () {
 };
 
 Interface.prototype.outOfMoney = function () {
-  console.log("");
+
 
   this.player1.money = 1005;
   document.getElementById("bet").elements[0].value = 5;
